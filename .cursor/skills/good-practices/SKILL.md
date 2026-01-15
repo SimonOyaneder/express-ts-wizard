@@ -93,3 +93,10 @@ function calculateTotalPrice(basePrice: number, taxRate: number): number {
 - Test names should describe the expected behavior: `should return null when user is not found`
 - Keep tests independent — each test should set up its own data and not depend on other tests
 - Aim for tests that are fast, isolated, and deterministic
+
+# Dependencies
+
+- **Always verify the latest version before installing any package**
+- Check npm or the official documentation to ensure you are installing the most recent stable version
+- Use `npm info <package> version` or check npmjs.com to confirm the latest version
+- Avoid installing outdated packages that may have known vulnerabilities or missing features

@@ -18,6 +18,7 @@ function getTemplatesDirectory(): string {
   const developmentPath = path.join(currentDirectory, "..", "src", "templates");
 
   if (fs.existsSync(productionPath)) {
+    /* istanbul ignore next -- @preserve Production path only exists in dist/ */
     return productionPath;
   }
   return developmentPath;

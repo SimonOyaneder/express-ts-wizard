@@ -10,8 +10,9 @@ app.use(express.json());
  * Health check endpoint for monitoring and load balancer probes.
  * @param {Request} _request - Express request object (unused)
  * @param {Response} response - Express response object
+ * @returns {void}
  */
-app.get("/health", (_request: Request, response: Response) => {
+app.get("/health", (_request: Request, response: Response): void => {
   response.json({ status: "ok", timestamp: new Date().toISOString() });
 });
 
@@ -19,8 +20,9 @@ app.get("/health", (_request: Request, response: Response) => {
  * Root endpoint returning a welcome message.
  * @param {Request} _request - Express request object (unused)
  * @param {Response} response - Express response object
+ * @returns {void}
  */
-app.get("/", (_request: Request, response: Response) => {
+app.get("/", (_request: Request, response: Response): void => {
   response.json({ message: "Welcome to your Express + TypeScript API!" });
 });
 

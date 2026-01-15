@@ -59,8 +59,9 @@ async function copyProjectFiles(
 
 /**
  * Installs npm dependencies in the project directory.
+ * Generates package-lock.json for deterministic installs.
  * @param {string} projectPath - Path to the project directory
- * @returns {Promise<void>} Resolves when dependencies are installed
+ * @returns {Promise<void>} Resolves when dependencies are installed and lock file is generated
  * @throws {Error} If npm install fails
  */
 async function installDependencies(projectPath: string): Promise<void> {
@@ -68,6 +69,12 @@ async function installDependencies(projectPath: string): Promise<void> {
     cwd: projectPath,
     stdio: "pipe",
   });
+  
+  // Verify package-lock.json was created
+  const lockFilePath = path.join(projectPath, "package-lock.json");
+  if (!fs.existsSync(lockFilePath)) {
+    throw new Error("package-lock.json was not generated");
+  }
 }
 
 /**

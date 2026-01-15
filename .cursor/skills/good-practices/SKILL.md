@@ -1,17 +1,17 @@
 ---
 name: good-practices
-description: TypeScript coding standards and design principles for this project
+description: TypeScript coding standards and design principles. Use when writing new code, reviewing code, refactoring, or when guidance is needed on naming conventions, documentation (JSDoc), immutability, strict typing, testing patterns, or design principles like avoiding over-abstraction.
 ---
-
-# Overview
-
-This skill defines coding standards and design principles for TypeScript development in this project.
 
 # Naming Conventions
 
-- **All code must use camelCase** for variables, functions, methods, and parameters
-- **PascalCase** is reserved for classes, interfaces, types, and enums
-- **All code, including variable names, function names, and comments, must be written in English**
+- **camelCase** for variables, functions, methods, and parameters
+- **PascalCase** for classes, interfaces, types, and enums
+- **All code and comments must be in English**
+- Names must reveal intent: `getUserById` instead of `get`, `calculateTotalPrice` instead of `calc`
+- Boolean variables/methods use prefixes: `isActive`, `hasPermission`, `canEdit`, `shouldRetry`
+- Avoid cryptic abbreviations: `transaction` instead of `tx`, `configuration` instead of `cfg`
+- Collections should be plural: `users`, `orderItems`, `activeConnections`
 
 # Documentation
 
@@ -75,13 +75,6 @@ function calculateTotalPrice(basePrice: number, taxRate: number): number {
 - Prefer specific types over broad generic types
 - Use union types and type guards for runtime type safety
 - Define explicit return types for public methods
-
-# Expressive Naming
-
-- Names must reveal intent: `getUserById` instead of `get`, `calculateTotalPrice` instead of `calc`
-- Boolean variables and methods should use clear prefixes: `isActive`, `hasPermission`, `canEdit`, `shouldRetry`
-- Avoid cryptic abbreviations: `transaction` instead of `tx`, `configuration` instead of `cfg`
-- Collections should be plural: `users`, `orderItems`, `activeConnections`
 
 # Testing
 

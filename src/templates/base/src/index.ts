@@ -2,7 +2,7 @@ import express, { Request, Response } from "express";
 import { Server } from "http";
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = Number(process.env.PORT) || 3000;
 
 app.use(express.json());
 
@@ -28,6 +28,14 @@ app.get("/", (_request: Request, response: Response): void => {
 
 const server: Server = app.listen(PORT, () => {
   console.log(`🚀 Server running at http://localhost:${PORT}`);
+});
+
+server.on("error", (error: NodeJS.ErrnoException) => {
+  if (error.code === "EADDRINUSE") {
+    console.error(`❌ Port ${PORT} is already in use. Try a different port with PORT=<number> npm run dev`);
+    process.exit(1);
+  }
+  throw error;
 });
 
 /**

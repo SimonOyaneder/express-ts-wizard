@@ -1,10 +1,10 @@
 {
-  "name": "create-expressts",
+  "name": "express-ts-wizard",
   "version": "0.1.0",
   "description": "CLI wizard to create Express.js projects with TypeScript",
   "type": "module",
   "bin": {
-    "create-expressts": "./dist/index.js"
+    "express-ts-wizard": "./dist/index.js"
   },
   "files": [
     "dist"

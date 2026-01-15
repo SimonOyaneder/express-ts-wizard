@@ -17,7 +17,7 @@ export interface UserChoices {
  * @returns {Promise<UserChoices | null>} The user's choices, or null if cancelled
  */
 export async function runPrompts(): Promise<UserChoices | null> {
-  p.intro(kleur.bgCyan().black(" create-expressts "));
+  p.intro(kleur.bgCyan().black(" express-ts-wizard "));
 
   const project = await p.group(
     {

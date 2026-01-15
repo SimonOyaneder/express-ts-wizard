@@ -87,7 +87,7 @@ async function initializeGitRepository(projectPath: string): Promise<void> {
     stdio: "pipe",
   });
 
-  await execa("git", ["commit", "-m", "Initial commit from create-expressts"], {
+  await execa("git", ["commit", "-m", "Initial commit from express-ts-wizard"], {
     cwd: projectPath,
     stdio: "pipe",
   });

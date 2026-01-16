@@ -162,10 +162,42 @@ process.on("SIGINT", () => gracefulShutdown("SIGINT"));
 Contributions are welcome! Feel free to:
 
 1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+2. Create a feature branch (`git checkout -b feat/amazing-feature`)
+3. Make your changes
+4. If your change affects users, add a changeset:
+   ```bash
+   npm run changeset
+   ```
+5. Commit your changes (`git commit -m 'Add amazing feature'`)
+6. Push to the branch (`git push origin feat/amazing-feature`)
+7. Open a Pull Request
+
+### Branch naming
+
+Use the following prefixes for your branches:
+
+| Prefix | Use case | Example |
+|--------|----------|---------|
+| `feat/` | New features | `feat/add-eslint-template` |
+| `fix/` | Bug fixes | `fix/tsconfig-path-issue` |
+| `docs/` | Documentation only | `docs/update-readme` |
+| `refactor/` | Code refactoring | `refactor/simplify-prompts` |
+| `test/` | Adding or updating tests | `test/add-action-tests` |
+| `chore/` | Maintenance tasks | `chore/update-dependencies` |
+
+### When to add a changeset
+
+Add a changeset if your PR:
+- Adds a new feature
+- Fixes a bug
+- Changes existing behavior
+- Updates dependencies that affect the generated project
+
+Skip the changeset for:
+- Documentation updates
+- Code refactoring without behavior changes
+- CI/workflow changes
+- Test improvements
 
 ## Comparison
 

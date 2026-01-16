@@ -57,21 +57,34 @@ jobs:
 
       - name: Create version tag
         if: steps.check.outputs.should_publish == 'true'
+        id: tag
         run: |
           VERSION=$(node -p "require('./package.json').version")
-          echo "Version: $VERSION"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
 
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
           if git rev-parse "v$VERSION" >/dev/null 2>&1; then
             echo "Tag v$VERSION already exists. Skipping."
+            echo "tag_created=false" >> $GITHUB_OUTPUT
           else
             git tag -a "v$VERSION" -m "Release v$VERSION"
             git push origin "v$VERSION"
             echo "Created tag v$VERSION"
+            echo "tag_created=true" >> $GITHUB_OUTPUT
           fi
 
       - name: Publish
         if: steps.check.outputs.should_publish == 'true'
         run: npm publish
+
+      - name: Create GitHub Release
+        if: steps.check.outputs.should_publish == 'true' && steps.tag.outputs.tag_created == 'true'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.tag.outputs.version }}
+          name: v${{ steps.tag.outputs.version }}
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}

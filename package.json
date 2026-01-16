@@ -21,7 +21,7 @@
     "prepublishOnly": "npm run build",
     "changeset": "changeset",
     "version": "changeset version",
-    "release": "npm run build && changeset publish"
+    "release": "changeset publish"
   },
   "keywords": [
     "express",

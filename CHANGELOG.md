@@ -1,5 +1,12 @@
 # express-ts-wizard
 
+## 0.1.7
+
+### Patch Changes
+
+- 58e8fa9: fix on tests check for release
+- c327933: Added readme and some data for npm page
+
 ## 0.1.6
 
 ### Patch Changes

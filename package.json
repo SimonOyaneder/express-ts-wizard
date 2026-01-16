@@ -1,7 +1,7 @@
 {
   "name": "express-ts-wizard",
   "version": "0.1.6",
-  "description": "CLI wizard to create Express.js projects with TypeScript",
+  "description": "Create production-ready Express.js + TypeScript projects in seconds. Interactive CLI with 3 strictness levels, hot-reload, graceful shutdown, and Express 5.0",
   "type": "module",
   "bin": {
     "express-ts-wizard": "./dist/index.js"
@@ -25,14 +25,51 @@
   },
   "keywords": [
     "express",
+    "expressjs",
+    "express5",
     "typescript",
+    "ts",
     "cli",
     "generator",
     "scaffold",
-    "create"
+    "scaffolding",
+    "create",
+    "init",
+    "boilerplate",
+    "starter",
+    "template",
+    "nodejs",
+    "node",
+    "api",
+    "rest",
+    "restful",
+    "backend",
+    "server",
+    "web",
+    "wizard",
+    "interactive",
+    "create-express",
+    "express-generator",
+    "express-typescript",
+    "express-ts",
+    "tsconfig",
+    "strict",
+    "hot-reload",
+    "tsx"
   ],
-  "author": "",
+  "author": {
+    "name": "Simon Oyaneder",
+    "url": "https://github.com/SimonOyaneder"
+  },
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SimonOyaneder/express-ts-wizard.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SimonOyaneder/express-ts-wizard/issues"
+  },
+  "homepage": "https://github.com/SimonOyaneder/express-ts-wizard#readme",
   "dependencies": {
     "@clack/prompts": "^0.8.2",
     "execa": "^9.5.2",

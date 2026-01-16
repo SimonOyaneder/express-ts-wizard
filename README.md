@@ -1,9 +1,8 @@
-<p align="center">
-  <h1 align="center">express-ts-wizard</h1>
-  <p align="center">
-    <strong>Create production-ready Express.js + TypeScript projects in seconds</strong>
-  </p>
-</p>
+# express-ts-wizard
+
+> Create production-ready Express.js + TypeScript projects in seconds
+
+The fastest way to bootstrap an Express 5.0 API with TypeScript. Zero config, interactive CLI, multiple strictness levels.
 
 <p align="center">
   <a href="https://www.npmjs.com/package/express-ts-wizard"><img src="https://img.shields.io/npm/v/express-ts-wizard.svg?style=flat-square" alt="npm version"></a>
@@ -16,6 +15,19 @@
 <p align="center">
   <img src="https://raw.githubusercontent.com/SimonOyaneder/express-ts-wizard/main/.github/demo.gif" alt="express-ts-wizard demo" width="600">
 </p>
+
+---
+
+## Install
+
+```bash
+# Run directly with npx (recommended)
+npx express-ts-wizard
+
+# Or install globally
+npm install -g express-ts-wizard
+express-ts-wizard
+```
 
 ---
 
@@ -41,6 +53,12 @@ npx express-ts-wizard
 ```
 
 That's it! Answer 3 simple questions and your project is ready.
+
+```bash
+cd my-express-app
+npm run dev
+# Server running at http://localhost:3000
+```
 
 ## Interactive Prompts
 
@@ -153,12 +171,28 @@ Contributions are welcome! Feel free to:
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
+## Comparison
+
+| Feature | express-ts-wizard | express-generator | create-express-api |
+|---------|-------------------|-------------------|-------------------|
+| TypeScript | Yes | No | Varies |
+| Express 5.0 | Yes | No (4.x) | No |
+| Interactive CLI | Yes | No | Varies |
+| Strictness levels | 3 options | N/A | N/A |
+| Hot reload | Yes (tsx) | No | Varies |
+| Graceful shutdown | Yes | No | No |
+| Zero config | Yes | No | Varies |
+
+## Related
+
+- [Express.js](https://expressjs.com/) - Fast, unopinionated, minimalist web framework
+- [TypeScript](https://www.typescriptlang.org/) - Typed JavaScript at any scale
+- [tsx](https://github.com/privatenumber/tsx) - TypeScript execute with hot-reload
+
 ## License
 
 MIT © [Simon Oyaneder](https://github.com/SimonOyaneder)
 
 ---
 
-<p align="center">
-  <sub>Built with ❤️ for the Express.js community</sub>
-</p>
+If this project helped you, consider giving it a star on [GitHub](https://github.com/SimonOyaneder/express-ts-wizard)!

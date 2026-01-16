@@ -1,5 +1,13 @@
 # express-ts-wizard
 
+## 0.1.3
+
+### Patch Changes
+
+- f0a9068: fix publish yml
+- 52c6573: fix on release and publish
+- a9e7641: fix releasee and publish
+
 ## 0.1.2
 
 ### Patch Changes

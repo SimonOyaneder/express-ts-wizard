@@ -2,9 +2,8 @@ name: Publish Package
 
 on:
   push:
-    branches: [main]
-    paths:
-      - 'package.json'
+    tags:
+      - 'v*'
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
@@ -16,9 +15,6 @@ jobs:
   publish:
     name: Publish to npm
     runs-on: ubuntu-latest
-    # Only publish if version changed (changeset PR was merged)
-    if: ${{ github.event.head_commit.message == 'chore: version packages' }}
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4

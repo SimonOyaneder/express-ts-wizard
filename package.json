@@ -71,7 +71,7 @@
   },
   "homepage": "https://github.com/SimonOyaneder/express-ts-wizard#readme",
   "dependencies": {
-    "@clack/prompts": "^0.8.2",
+    "@clack/prompts": "^0.11.0",
     "execa": "^9.5.2",
     "fs-extra": "^11.2.0",
     "kleur": "^4.1.5"

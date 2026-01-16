@@ -12,10 +12,6 @@ The fastest way to bootstrap an Express 5.0 API with TypeScript. Zero config, in
   <img src="https://img.shields.io/node/v/express-ts-wizard.svg?style=flat-square" alt="node version">
 </p>
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/SimonOyaneder/express-ts-wizard/main/.github/demo.gif" alt="express-ts-wizard demo" width="600">
-</p>
-
 ---
 
 ## Install

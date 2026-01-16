@@ -1,0 +1,105 @@
+name: Check Template Dependencies
+
+on:
+  schedule:
+    # Run every Saturday at 10:00 AM Chile time (after dependabot)
+    - cron: '0 13 * * 6'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  check-template-deps:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Check for outdated template dependencies
+        id: check-deps
+        run: |
+          echo "## Template Dependencies Check" > deps-report.md
+          echo "" >> deps-report.md
+          echo "Checking \`src/templates/base/package.template.json\` for outdated dependencies..." >> deps-report.md
+          echo "" >> deps-report.md
+
+          # Read template package.json and extract dependencies
+          TEMPLATE_FILE="src/templates/base/package.template.json"
+          
+          if [ ! -f "$TEMPLATE_FILE" ]; then
+            echo "Template file not found!"
+            exit 1
+          fi
+
+          # Create a temporary package.json to check versions
+          mkdir -p /tmp/template-check
+          
+          # Extract dependencies (removing template variables)
+          cat "$TEMPLATE_FILE" | sed 's/{{PROJECT_NAME}}/template-check/g' > /tmp/template-check/package.json
+          
+          cd /tmp/template-check
+          
+          # Install dependencies silently
+          npm install --silent 2>/dev/null || true
+          
+          # Check for outdated packages
+          OUTDATED=$(npm outdated --json 2>/dev/null || echo "{}")
+          
+          cd -
+          
+          if [ "$OUTDATED" = "{}" ]; then
+            echo "✅ All template dependencies are up to date!" >> deps-report.md
+            echo "has_updates=false" >> $GITHUB_OUTPUT
+          else
+            echo "⚠️ **Outdated dependencies found:**" >> deps-report.md
+            echo "" >> deps-report.md
+            echo "\`\`\`json" >> deps-report.md
+            echo "$OUTDATED" | jq '.' >> deps-report.md
+            echo "\`\`\`" >> deps-report.md
+            echo "" >> deps-report.md
+            echo "### Suggested Updates" >> deps-report.md
+            echo "" >> deps-report.md
+            echo "Please update \`src/templates/base/package.template.json\` manually with the new versions." >> deps-report.md
+            echo "has_updates=true" >> $GITHUB_OUTPUT
+          fi
+          
+          cat deps-report.md
+
+      - name: Create issue if updates available
+        if: steps.check-deps.outputs.has_updates == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const report = fs.readFileSync('deps-report.md', 'utf8');
+            
+            // Check if there's already an open issue
+            const issues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: 'template-deps'
+            });
+            
+            if (issues.data.length === 0) {
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: '📦 Template dependencies need updating',
+                body: report,
+                labels: ['template-deps', 'dependencies']
+              });
+              console.log('Created new issue for template dependencies');
+            } else {
+              // Update existing issue
+              await github.rest.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issues.data[0].number,
+                body: report
+              });
+              console.log('Updated existing issue');
+            }

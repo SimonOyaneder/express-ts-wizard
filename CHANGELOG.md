@@ -1,5 +1,11 @@
 # express-ts-wizard
 
+## 0.1.2
+
+### Patch Changes
+
+- 03392fb: test release
+
 ## 0.1.1
 
 ### Patch Changes

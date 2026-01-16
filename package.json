@@ -1,6 +1,6 @@
 {
   "name": "express-ts-wizard",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "CLI wizard to create Express.js projects with TypeScript",
   "type": "module",
   "bin": {

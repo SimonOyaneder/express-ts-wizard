@@ -1,4 +1,4 @@
-name: Release
+name: Publish Package
 
 on:
   push:
@@ -6,34 +6,23 @@ on:
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
+permissions:
+  contents: read
+  id-token: write
+
 jobs:
-  release:
+  publish:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
-      id-token: write
 
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
-          registry-url: "https://registry.npmjs.org"
-          cache: npm
-
-      - run: node -v && npm -v
+          node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
 
       - run: npm ci
-
-      - name: Create Release Pull Request or Publish
-        uses: changesets/action@v1
-        with:
-          version: npm run version
-          publish: npm run release
-          title: "chore: version packages"
-          commit: "chore: version packages"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_CONFIG_PROVENANCE: true
+      - run: npm run build
+      - run: npm test
+      - run: npm publish

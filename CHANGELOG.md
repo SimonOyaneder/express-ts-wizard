@@ -1,5 +1,11 @@
 # express-ts-wizard
 
+## 0.2.0
+
+### Minor Changes
+
+- 9f8a188: First release
+
 ## 0.1.7
 
 ### Patch Changes

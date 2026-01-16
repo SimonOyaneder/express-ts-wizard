@@ -1,6 +1,6 @@
 {
   "name": "express-ts-wizard",
-  "version": "0.1.7",
+  "version": "0.2.0",
   "description": "Create production-ready Express.js + TypeScript projects in seconds. Interactive CLI with 3 strictness levels, hot-reload, graceful shutdown, and Express 5.0",
   "type": "module",
   "bin": {

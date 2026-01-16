@@ -1,5 +1,12 @@
 # express-ts-wizard
 
+## 0.1.4
+
+### Patch Changes
+
+- ae0da1e: fix releasee and publish
+- ae0da1e: fix releas and fix release and publish
+
 ## 0.1.3
 
 ### Patch Changes

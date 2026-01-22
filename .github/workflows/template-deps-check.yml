@@ -46,24 +46,76 @@ jobs:
           npm install --silent 2>/dev/null || true
           
           # Check for outdated packages
-          OUTDATED=$(npm outdated --json 2>/dev/null || echo "{}")
+          OUTDATED_RAW=$(npm outdated --json 2>/dev/null || echo "{}")
           
           cd -
           
-          if [ "$OUTDATED" = "{}" ]; then
+          # Filter updates: only where current != wanted (respects semver ranges)
+          # This avoids suggesting major version jumps like @types/node@25 when using ^22.x
+          SEMVER_UPDATES=$(echo "$OUTDATED_RAW" | jq 'to_entries | map(select(.value.current != .value.wanted)) | from_entries')
+          
+          # Separate major version updates (latest major > current major) for informational purposes
+          MAJOR_UPDATES=$(echo "$OUTDATED_RAW" | jq '
+            to_entries 
+            | map(select(
+                (.value.current | split(".")[0] | tonumber) < (.value.latest | split(".")[0] | tonumber)
+              ))
+            | from_entries
+          ')
+          
+          HAS_SEMVER_UPDATES=false
+          HAS_MAJOR_UPDATES=false
+          
+          if [ "$SEMVER_UPDATES" != "{}" ]; then
+            HAS_SEMVER_UPDATES=true
+          fi
+          
+          if [ "$MAJOR_UPDATES" != "{}" ]; then
+            HAS_MAJOR_UPDATES=true
+          fi
+          
+          if [ "$HAS_SEMVER_UPDATES" = "false" ] && [ "$HAS_MAJOR_UPDATES" = "false" ]; then
             echo "✅ All template dependencies are up to date!" >> deps-report.md
             echo "has_updates=false" >> $GITHUB_OUTPUT
           else
-            echo "⚠️ **Outdated dependencies found:**" >> deps-report.md
+            if [ "$HAS_SEMVER_UPDATES" = "true" ]; then
+              echo "### ⚠️ Updates available (within semver range)" >> deps-report.md
+              echo "" >> deps-report.md
+              echo "These updates are safe to apply and respect the current version constraints:" >> deps-report.md
+              echo "" >> deps-report.md
+              echo "\`\`\`json" >> deps-report.md
+              echo "$SEMVER_UPDATES" | jq '.' >> deps-report.md
+              echo "\`\`\`" >> deps-report.md
+              echo "" >> deps-report.md
+            fi
+            
+            if [ "$HAS_MAJOR_UPDATES" = "true" ]; then
+              echo "### 📦 Major version updates available (informational)" >> deps-report.md
+              echo "" >> deps-report.md
+              echo "> **Note:** These are major version bumps that may contain breaking changes." >> deps-report.md
+              echo "> Review changelogs before updating. For \`@types/node\`, the major version should match your target Node.js version." >> deps-report.md
+              echo "" >> deps-report.md
+              echo "\`\`\`json" >> deps-report.md
+              echo "$MAJOR_UPDATES" | jq '.' >> deps-report.md
+              echo "\`\`\`" >> deps-report.md
+              echo "" >> deps-report.md
+            fi
+            
+            echo "### Suggested Actions" >> deps-report.md
             echo "" >> deps-report.md
-            echo "\`\`\`json" >> deps-report.md
-            echo "$OUTDATED" | jq '.' >> deps-report.md
-            echo "\`\`\`" >> deps-report.md
-            echo "" >> deps-report.md
-            echo "### Suggested Updates" >> deps-report.md
-            echo "" >> deps-report.md
-            echo "Please update \`src/templates/base/package.template.json\` manually with the new versions." >> deps-report.md
-            echo "has_updates=true" >> $GITHUB_OUTPUT
+            if [ "$HAS_SEMVER_UPDATES" = "true" ]; then
+              echo "- Update \`src/templates/base/package.template.json\` with the semver-compatible versions above." >> deps-report.md
+            fi
+            if [ "$HAS_MAJOR_UPDATES" = "true" ]; then
+              echo "- Review major updates and decide if bumping to new major versions is appropriate for the template." >> deps-report.md
+            fi
+            
+            # Only create issue if there are actual semver updates (not just major version info)
+            if [ "$HAS_SEMVER_UPDATES" = "true" ]; then
+              echo "has_updates=true" >> $GITHUB_OUTPUT
+            else
+              echo "has_updates=false" >> $GITHUB_OUTPUT
+            fi
           fi
           
           cat deps-report.md

@@ -47,6 +47,9 @@ async function copyProjectFiles(
   const gitignoreSourcePath = path.join(templatesDirectory, "base", "gitignore");
   await fs.copy(gitignoreSourcePath, path.join(projectPath, ".gitignore"));
 
+  const envExampleSourcePath = path.join(templatesDirectory, "base", ".env.example");
+  await fs.copy(envExampleSourcePath, path.join(projectPath, ".env.example"));
+
   const packageTemplateContent = await fs.readFile(
     path.join(templatesDirectory, "base", "package.template.json"),
     "utf-8"

@@ -18,8 +18,6 @@ function displaySuccessMessage(projectName: string, strictnessDescription: strin
     "npm run build      → Compile to JavaScript",
     "npm run start      → Run the compiled version",
     "npm run type-check → Check types without compiling",
-    "",
-    kleur.gray("Tip: Use 'npm ci' for deterministic installs (recommended in CI/CD)"),
   ];
 
   p.note(nextSteps.join("\n"), "Next steps");

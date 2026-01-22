@@ -63,22 +63,31 @@ async function copyProjectFiles(
 
 /**
  * Installs npm dependencies in the project directory.
- * Generates package-lock.json for deterministic installs.
+ * Uses a two-step process to ensure all packages (including optional native ones) are installed:
+ * 1. npm install --package-lock-only - generates package-lock.json without downloading packages
+ * 2. npm ci - performs a clean install based on the lock file
+ * This approach is needed because npm install with stdio: "pipe" skips optional native packages.
  * @param {string} projectPath - Path to the project directory
  * @returns {Promise<void>} Resolves when dependencies are installed and lock file is generated
  * @throws {Error} If npm install fails
  */
 async function installDependencies(projectPath: string): Promise<void> {
-  await execa("npm", ["install"], {
+  // Generate package-lock.json without downloading packages
+  await execa("npm", ["install", "--package-lock-only"], {
     cwd: projectPath,
     stdio: "pipe",
   });
-  
-  // Verify package-lock.json was created
+
   const lockFilePath = path.join(projectPath, "package-lock.json");
   if (!fs.existsSync(lockFilePath)) {
     throw new Error("package-lock.json was not generated");
   }
+
+  // Clean install based on lock file (ensures all optional packages are installed)
+  await execa("npm", ["ci"], {
+    cwd: projectPath,
+    stdio: "pipe",
+  });
 }
 
 /**

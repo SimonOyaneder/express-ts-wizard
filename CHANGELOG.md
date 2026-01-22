@@ -1,5 +1,13 @@
 # express-ts-wizard
 
+## 0.2.2
+
+### Patch Changes
+
+- f8ad6d6: Fix on the CI workflow call
+- b8df360: Ensures all optional packages are installed
+- baf27fa: FIxed the env load on template
+
 ## 0.2.1
 
 ### Patch Changes

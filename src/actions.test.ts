@@ -131,8 +131,8 @@ describe("createProject", () => {
     // Verify ensureDir was called for src directory
     expect(mockEnsureDir).toHaveBeenCalled();
 
-    // Verify copy was called for index.ts, gitignore, and tsconfig
-    expect(mockCopy).toHaveBeenCalledTimes(3);
+    // Verify copy was called for index.ts, gitignore, .env.example, and tsconfig
+    expect(mockCopy).toHaveBeenCalledTimes(4);
 
     // Verify package.json was written with project name replaced
     expect(mockWriteFile).toHaveBeenCalled();
@@ -243,7 +243,7 @@ describe("createProject", () => {
 
     // Verify project was still created (using development path)
     expect(mockEnsureDir).toHaveBeenCalled();
-    expect(mockCopy).toHaveBeenCalledTimes(3);
+    expect(mockCopy).toHaveBeenCalledTimes(4);
   });
 
   it("should use production templates path when it exists", async () => {
@@ -253,7 +253,7 @@ describe("createProject", () => {
 
     // Verify project was created using production path
     expect(mockEnsureDir).toHaveBeenCalled();
-    expect(mockCopy).toHaveBeenCalledTimes(3);
+    expect(mockCopy).toHaveBeenCalledTimes(4);
   });
 
   it("should throw error and stop spinner when copyProjectFiles fails", async () => {

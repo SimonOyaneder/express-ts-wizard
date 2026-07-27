@@ -1,10 +1,7 @@
 name: Check Template Dependencies
 
 on:
-  schedule:
-    # Run every Saturday at 10:00 AM Chile time (after dependabot)
-    - cron: '0 13 * * 6'
-  workflow_dispatch: # Allow manual trigger
+  workflow_dispatch: # Manual trigger only - scheduled runs removed (project unmaintained)
 
 jobs:
   check-template-deps:
